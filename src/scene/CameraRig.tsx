@@ -7,6 +7,11 @@ import { useStore } from '../store/useStore'
 import { FOCUS_POINTS, CAMERA_OFFSET } from '../config/focusPoints'
 import { DEFAULT_CAMERA } from './Scene'
 
+// Without this, GSAP freezes tween progress whenever the frame rate drops
+// below ~2fps (its lag smoothing), which leaves camera transitions — and the
+// isTransitioning flag — stuck on very slow devices.
+gsap.ticker.lagSmoothing(0)
+
 // Drives all camera moves with GSAP. Watches focusedId: non-null → zoom to
 // its focus point, null → return to the default pose. OrbitControls are
 // disabled while a tween runs and re-synced via controls.update().

@@ -37,8 +37,11 @@ changing your system clock.
 | Album (lower shelf) | Education history |
 | Coffee maker | Tech stack ("My Fuel") |
 | Bed lamp | Toggles a warm point light |
+| Stand lamp (corner) | Toggles a warm floor light |
 | Alarm clock | Shows the current time in a bubble |
-| Cat | Curls into a tighter ball |
+| Cat | Wanders the room; click it for a meow |
+
+At night (after 8pm local time) both lamps start switched on.
 
 ## Swapping in real 3D models
 
@@ -58,3 +61,12 @@ a clip keyed by the `catPose` store value.
 
 All portfolio content lives in `src/data/*.ts` (bio, projects, experience,
 education, achievements, stack). Editing content never touches scene code.
+
+## Asset credits
+
+- Cat model: this work is based on
+  ["Toon Cat FREE"](https://sketchfab.com/3d-models/toon-cat-free-b2bd1ee7858444bda366110a2d960386)
+  by [Omabuarts Studio](https://sketchfab.com/omabuarts), licensed under
+  [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/).
+- Meow sound: ["Sweet kitty meow"](https://mixkit.co/free-sound-effects/cat/)
+  from Mixkit, used under the Mixkit License.

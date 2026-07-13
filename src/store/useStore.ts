@@ -1,12 +1,16 @@
 import { create } from 'zustand'
-import type { CatPose, FocusableId } from '../types'
+import type { FocusableId } from '../types'
+import { currentHour, phaseFor } from '../hooks/useTimeOfDay'
+
+// Visiting at night? The lamps greet you already lit.
+const startsAtNight = phaseFor(currentHour()) === 'night'
 
 interface PortfolioState {
   focusedId: FocusableId | null
   modalId: FocusableId | null
   isTransitioning: boolean
   lampOn: boolean
-  catPose: CatPose
+  standLampOn: boolean
   clockBubble: string | null
 
   focusObject: (id: FocusableId) => void
@@ -14,8 +18,9 @@ interface PortfolioState {
   setModalId: (id: FocusableId | null) => void
   setTransitioning: (v: boolean) => void
   toggleLamp: () => void
-  toggleCatPose: () => void
+  toggleStandLamp: () => void
   showClockBubble: (text: string) => void
+  hideClockBubble: () => void
 }
 
 let clockTimeout: ReturnType<typeof setTimeout> | undefined
@@ -24,8 +29,8 @@ export const useStore = create<PortfolioState>()((set, get) => ({
   focusedId: null,
   modalId: null,
   isTransitioning: false,
-  lampOn: false,
-  catPose: 'loaf',
+  lampOn: startsAtNight,
+  standLampOn: startsAtNight,
   clockBubble: null,
 
   focusObject: (id) => {
@@ -43,12 +48,21 @@ export const useStore = create<PortfolioState>()((set, get) => ({
   setModalId: (id) => set({ modalId: id }),
   setTransitioning: (v) => set({ isTransitioning: v }),
   toggleLamp: () => set((s) => ({ lampOn: !s.lampOn })),
-  toggleCatPose: () =>
-    set((s) => ({ catPose: s.catPose === 'loaf' ? 'curled' : 'loaf' })),
+  toggleStandLamp: () => set((s) => ({ standLampOn: !s.standLampOn })),
 
   showClockBubble: (text) => {
     clearTimeout(clockTimeout)
     set({ clockBubble: text })
-    clockTimeout = setTimeout(() => set({ clockBubble: null }), 3000)
+    clockTimeout = setTimeout(() => set({ clockBubble: null }), 4000)
+  },
+
+  hideClockBubble: () => {
+    clearTimeout(clockTimeout)
+    set({ clockBubble: null })
   },
 }))
+
+if (import.meta.env.DEV) {
+  // exposed for browser-automation tests
+  ;(window as unknown as Record<string, unknown>).__store = useStore
+}

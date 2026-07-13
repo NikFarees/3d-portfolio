@@ -2,6 +2,7 @@ import { Interactable, HitBox } from './Interactable'
 import { SwappableModel } from './SwappableModel'
 import { Block } from './Block'
 import { COLORS } from '../materials'
+import { BookRow, ShelfPlant } from './Decor'
 
 // Metal flight case. Anchor origin: bottom-center.
 function MetalCasePrimitive() {
@@ -45,6 +46,10 @@ export function Shelves() {
         <HitBox size={[0.55, 0.3, 0.45]} position={[0, 0.1, 0]} />
         <SwappableModel fallback={<AlbumPrimitive />} />
       </Interactable>
+
+      {/* shelf life: trailing plant beside the case, books beside the album */}
+      <ShelfPlant position={[3.05, 2.5, -3.72]} />
+      <BookRow position={[2.72, 1.73, -3.72]} />
     </group>
   )
 }

@@ -17,4 +17,13 @@ export const COLORS = {
   gold: '#d4af37',
   silver: '#c0c0c0',
   bronze: '#cd7f32',
+  rug: '#c9b8a4',
+  pouf: '#b5a48e',
+  terracotta: '#b06a4a',
+  trunk: '#7a5a3a',
+  foliageDark: '#55743f',
+  foliageMid: '#6e8b5e',
+  foliageLight: '#7d9a6a',
+  duvet: '#d7d2c6',
+  pillow: '#f0ebe1',
 } as const

@@ -27,11 +27,11 @@ export const LIGHTING: Record<DayPhase, LightingPreset> = {
     background: '#e8c4b0',
   },
   night: {
-    ambientIntensity: 0.18,
-    ambientColor: '#4a5a8a',
-    sunIntensity: 0.5,
-    sunColor: '#7d90d9',
+    ambientIntensity: 0.55,
+    ambientColor: '#7889bd',
+    sunIntensity: 1.05,
+    sunColor: '#9db0e8',
     sunPosition: [-8, 7, 2],
-    background: '#12182b',
+    background: '#232c4e',
   },
 }

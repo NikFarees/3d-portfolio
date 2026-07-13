@@ -7,5 +7,3 @@ export type FocusableId =
   | 'coffee';
 
 export type DayPhase = 'day' | 'evening' | 'night';
-
-export type CatPose = 'loaf' | 'curled';

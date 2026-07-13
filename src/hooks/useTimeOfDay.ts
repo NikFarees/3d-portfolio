@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import type { DayPhase } from '../types'
 
 // Dev override: append ?hour=22 to preview a phase without changing the clock.
-function currentHour(): number {
+export function currentHour(): number {
   const param = new URLSearchParams(window.location.search).get('hour')
   if (param !== null) {
     const h = Number(param)

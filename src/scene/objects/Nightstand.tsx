@@ -69,6 +69,7 @@ export function Nightstand() {
   const lampOn = useStore((s) => s.lampOn)
   const toggleLamp = useStore((s) => s.toggleLamp)
   const showClockBubble = useStore((s) => s.showClockBubble)
+  const hideClockBubble = useStore((s) => s.hideClockBubble)
   const clockBubble = useStore((s) => s.clockBubble)
 
   const onClockClick = () => {
@@ -92,12 +93,12 @@ export function Nightstand() {
         <SwappableModel fallback={<ClockPrimitive />} />
         {clockBubble && (
           <Html
-            position={[0, 0.45, 0]}
+            position={[0, 0.85, 0]}
             center
             zIndexRange={[10, 0]}
             style={{ pointerEvents: 'none', whiteSpace: 'nowrap' }}
           >
-            <SpeechBubble text={clockBubble} />
+            <SpeechBubble text={clockBubble} onClose={hideClockBubble} />
           </Html>
         )}
       </Interactable>
