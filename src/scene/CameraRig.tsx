@@ -6,6 +6,7 @@ import type { OrbitControls as OrbitControlsImpl } from 'three-stdlib'
 import { useStore } from '../store/useStore'
 import { FOCUS_POINTS, CAMERA_OFFSET } from '../config/focusPoints'
 import { DEFAULT_CAMERA } from './Scene'
+import { getZoomFactor } from './ResponsiveZoom'
 
 // Without this, GSAP freezes tween progress whenever the frame rate drops
 // below ~2fps (its lag smoothing), which leaves camera transitions — and the
@@ -35,7 +36,9 @@ export function CameraRig() {
     const target = toFocus
       ? FOCUS_POINTS[focusedId].target
       : DEFAULT_CAMERA.target
-    const zoom = toFocus ? FOCUS_POINTS[focusedId].zoom : DEFAULT_CAMERA.zoom
+    const zoom =
+      (toFocus ? FOCUS_POINTS[focusedId].zoom : DEFAULT_CAMERA.zoom) *
+      getZoomFactor()
     const position = toFocus
       ? [
           target[0] + CAMERA_OFFSET[0],

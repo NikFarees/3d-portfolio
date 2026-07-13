@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Scene } from './scene/Scene'
 import { ModalRoot } from './ui/ModalRoot'
+import { DoodleOverlay } from './ui/DoodleOverlay'
 import { useStore } from './store/useStore'
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
   return (
     <div className="app">
       <Scene />
+      <DoodleOverlay />
       <ModalRoot />
     </div>
   )

@@ -24,6 +24,7 @@ export const COLORS = {
   foliageDark: '#55743f',
   foliageMid: '#6e8b5e',
   foliageLight: '#7d9a6a',
-  duvet: '#d7d2c6',
+  duvet: '#722f37',
+  duvetFold: '#5c242b',
   pillow: '#f0ebe1',
 } as const

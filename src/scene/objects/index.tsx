@@ -9,6 +9,7 @@ import { Bed } from './Bed'
 import { Cat } from './Cat'
 import { FloorPlant, Pouf, WallClock } from './Decor'
 import { StandLamp } from './StandLamp'
+import { WallLamp } from './WallLamp'
 
 export function RoomObjects() {
   return (
@@ -28,6 +29,7 @@ export function RoomObjects() {
       <Pouf position={[-1.3, 0.26, 2.7]} />
       <WallClock position={[3.45, 3.1, -3.93]} />
       <StandLamp />
+      <WallLamp />
     </group>
   )
 }

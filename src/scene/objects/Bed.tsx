@@ -27,7 +27,7 @@ export function Bed() {
       </RoundedBox>
       {/* folded blanket strip at the foot */}
       <RoundedBox args={[2.2, 0.1, 0.62]} radius={0.05} smoothness={4} castShadow position={[0, 0.8, 1.0]}>
-        <meshStandardMaterial color={COLORS.linenShadow} roughness={1} />
+        <meshStandardMaterial color={COLORS.duvetFold} roughness={1} />
       </RoundedBox>
 
       {/* pillows */}

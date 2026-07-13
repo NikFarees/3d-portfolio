@@ -11,6 +11,7 @@ interface PortfolioState {
   isTransitioning: boolean
   lampOn: boolean
   standLampOn: boolean
+  wallLampOn: boolean
   clockBubble: string | null
 
   focusObject: (id: FocusableId) => void
@@ -19,6 +20,7 @@ interface PortfolioState {
   setTransitioning: (v: boolean) => void
   toggleLamp: () => void
   toggleStandLamp: () => void
+  toggleWallLamp: () => void
   showClockBubble: (text: string) => void
   hideClockBubble: () => void
 }
@@ -31,6 +33,7 @@ export const useStore = create<PortfolioState>()((set, get) => ({
   isTransitioning: false,
   lampOn: startsAtNight,
   standLampOn: startsAtNight,
+  wallLampOn: startsAtNight,
   clockBubble: null,
 
   focusObject: (id) => {
@@ -49,6 +52,7 @@ export const useStore = create<PortfolioState>()((set, get) => ({
   setTransitioning: (v) => set({ isTransitioning: v }),
   toggleLamp: () => set((s) => ({ lampOn: !s.lampOn })),
   toggleStandLamp: () => set((s) => ({ standLampOn: !s.standLampOn })),
+  toggleWallLamp: () => set((s) => ({ wallLampOn: !s.wallLampOn })),
 
   showClockBubble: (text) => {
     clearTimeout(clockTimeout)

@@ -4,6 +4,7 @@ import { Lighting } from './Lighting'
 import { Room } from './Room'
 import { RoomObjects } from './objects'
 import { CameraRig } from './CameraRig'
+import { ResponsiveZoom } from './ResponsiveZoom'
 
 // Isometric framing: camera sits on the x=z diagonal, elevated, looking at
 // room center. Ortho zoom (not distance) controls apparent size.
@@ -36,6 +37,7 @@ export function Scene() {
         maxAzimuthAngle={Math.PI / 4 + 0.35}
       />
       <CameraRig />
+      <ResponsiveZoom />
       <Lighting />
       <Room />
       <RoomObjects />

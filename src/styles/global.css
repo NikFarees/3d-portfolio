@@ -214,3 +214,216 @@ body {
     opacity: 1;
   }
 }
+
+/* ---------- Doodle overlay ---------- */
+
+.doodle-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.doodle {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+}
+
+.doodle-text {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  opacity: 0;
+  transform: rotate(-4deg);
+  animation: doodle-text-in 0.6s ease-out forwards;
+  white-space: nowrap;
+}
+
+.doodle-title {
+  font-size: clamp(30px, 3.4vw, 46px);
+  line-height: 1;
+}
+
+.doodle-sub {
+  font-size: clamp(19px, 1.7vw, 26px);
+}
+
+.doodle-credit-text {
+  font-size: clamp(17px, 1.4vw, 22px);
+  opacity: 0;
+}
+
+.doodle-svg {
+  width: clamp(80px, 9vw, 150px);
+  height: auto;
+}
+
+.doodle-underline {
+  width: clamp(110px, 11vw, 170px);
+  margin-top: -6px;
+}
+
+.doodle-heart {
+  width: clamp(22px, 2vw, 32px);
+  align-self: center;
+}
+
+.doodle-star {
+  width: clamp(20px, 2.2vw, 34px);
+}
+
+.doodle-sway {
+  animation: doodle-sway 5s ease-in-out infinite;
+}
+
+.doodle-only-mobile {
+  display: none;
+}
+
+/* --- desktop / tablet positions --- */
+
+.doodle-intro {
+  top: 9%;
+  left: 6%;
+}
+
+.doodle-intro .doodle-svg:last-child {
+  margin-left: 18%;
+}
+
+.doodle-cat {
+  bottom: 12%;
+  left: 9%;
+}
+
+.doodle-medals {
+  top: 22%;
+  right: 5%;
+  align-items: flex-end;
+}
+
+.doodle-credit {
+  bottom: 10%;
+  right: 6%;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.doodle-deco-star {
+  top: 12%;
+  right: 22%;
+}
+
+@keyframes doodle-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes doodle-text-in {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(-4deg) translateY(0);
+  }
+}
+
+@keyframes doodle-sway {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(2px, -3px) rotate(0.8deg);
+  }
+}
+
+/* --- tablet: tuck labels closer to edges, drop pointer arrows that
+       would misalign with the 3D scene --- */
+@media (max-width: 1100px) {
+  .doodle-intro {
+    top: 5%;
+    left: 5%;
+  }
+
+  .doodle-medals {
+    top: 16%;
+    right: 4%;
+  }
+
+  .doodle-cat {
+    bottom: 8%;
+    left: 6%;
+  }
+
+  .doodle-credit {
+    bottom: 6%;
+    right: 5%;
+  }
+}
+
+/* --- mobile: compact banner top-center + hint bottom-center --- */
+@media (max-width: 768px) {
+  .doodle-only-desktop {
+    display: none;
+  }
+
+  .doodle-only-mobile {
+    display: block;
+  }
+
+  .doodle-intro {
+    top: max(3%, env(safe-area-inset-top));
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    text-align: center;
+  }
+
+  .doodle-intro .doodle-svg:last-child {
+    display: none; /* intro arrow points at nothing when room fills screen */
+  }
+
+  .doodle-title {
+    font-size: 34px;
+  }
+
+  .doodle-sub {
+    font-size: 20px;
+  }
+
+  .doodle-cat {
+    bottom: max(4%, env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+  }
+
+  .doodle-cat .doodle-svg {
+    display: none;
+  }
+
+  .doodle-medals,
+  .doodle-deco-star {
+    display: none;
+  }
+
+  .doodle-credit {
+    display: none;
+  }
+
+  /* sway uses transform too — would fight translateX centering */
+  .doodle-intro.doodle-sway,
+  .doodle-cat.doodle-sway {
+    animation: none;
+  }
+}
