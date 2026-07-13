@@ -1,0 +1,20 @@
+// Shared color palette — industrial-zen: concrete, warm wood, soft linen.
+export const COLORS = {
+  concrete: '#b8b4ad',
+  concreteLight: '#c9c5be',
+  floorTile: '#d8d4cc',
+  wood: '#a97c50',
+  woodDark: '#8a6240',
+  linen: '#e3ded4',
+  linenShadow: '#cfc9bd',
+  metal: '#9aa0a6',
+  metalDark: '#5f6368',
+  screenDark: '#1e2430',
+  plantGreen: '#6e8b5e',
+  potWhite: '#efece6',
+  catGrey: '#8d8578',
+  lampShade: '#3d4045',
+  gold: '#d4af37',
+  silver: '#c0c0c0',
+  bronze: '#cd7f32',
+} as const

@@ -1,0 +1,195 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
+  background: #dfe8ef;
+}
+
+.app {
+  position: relative;
+}
+
+/* ---------- Speech bubble ---------- */
+
+.speech-bubble {
+  position: relative;
+  background: #fff;
+  color: #1a1a1a;
+  padding: 8px 16px;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+  animation: bubble-pop 0.18s ease-out;
+  transform-origin: bottom center;
+}
+
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 7px 0 7px;
+  border-style: solid;
+  border-color: #fff transparent transparent transparent;
+}
+
+@keyframes bubble-pop {
+  from {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- Modal ---------- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 12, 18, 0.25);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 24px;
+  animation: fade-in 0.25s ease-out;
+}
+
+.modal-panel {
+  position: relative;
+  width: min(460px, 92vw);
+  max-height: 86vh;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.28);
+  animation: panel-in 0.3s ease-out;
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: #eee;
+  color: #333;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  background: #ddd;
+}
+
+.modal-panel h2 {
+  font-size: 22px;
+  margin-bottom: 4px;
+}
+
+.modal-panel h3 {
+  font-size: 15px;
+  margin: 18px 0 6px;
+}
+
+.modal-panel p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.modal-panel ul {
+  padding-left: 18px;
+  margin-bottom: 10px;
+}
+
+.modal-panel li {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 4px;
+}
+
+.modal-subtitle {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 14px;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 6px 0 10px;
+}
+
+.tag {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #eef1f5;
+  color: #445;
+}
+
+.entry {
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.entry:last-child {
+  border-bottom: none;
+}
+
+.entry-meta {
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes panel-in {
+  from {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
