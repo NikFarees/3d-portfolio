@@ -1,4 +1,4 @@
-import { Interactable } from './Interactable'
+import { Interactable, HitBox } from './Interactable'
 import { SwappableModel } from './SwappableModel'
 import { COLORS } from '../materials'
 import { DESK_TOP_Y } from './Desk'
@@ -29,6 +29,7 @@ function CoffeeMakerPrimitive() {
 export function CoffeeMaker() {
   return (
     <Interactable id="coffee" label="My Fuel" labelOffset={[0, 0.7, 0]} position={[-3.45, DESK_TOP_Y, 0.55]}>
+      <HitBox size={[0.35, 0.5, 0.35]} position={[0, 0.2, 0]} />
       <SwappableModel fallback={<CoffeeMakerPrimitive />} />
     </Interactable>
   )
