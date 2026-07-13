@@ -2,6 +2,7 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Lighting } from './Lighting'
 import { Room } from './Room'
+import { RoomObjects } from './objects'
 import { CameraRig } from './CameraRig'
 
 // Isometric framing: camera sits on the x=z diagonal, elevated, looking at
@@ -37,6 +38,7 @@ export function Scene() {
       <CameraRig />
       <Lighting />
       <Room />
+      <RoomObjects />
     </Canvas>
   )
 }
