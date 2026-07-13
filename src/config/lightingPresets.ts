@@ -11,9 +11,9 @@ export interface LightingPreset {
 
 export const LIGHTING: Record<DayPhase, LightingPreset> = {
   day: {
-    ambientIntensity: 0.7,
+    ambientIntensity: 0.9,
     ambientColor: '#fff6e8',
-    sunIntensity: 2.2,
+    sunIntensity: 2.4,
     sunColor: '#ffedcc',
     sunPosition: [-8, 8, 2],
     background: '#dfe8ef',

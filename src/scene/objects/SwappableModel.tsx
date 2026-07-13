@@ -1,9 +1,9 @@
 import { Suspense, useMemo } from 'react'
 import type { ReactNode } from 'react'
-import type { GroupProps } from '@react-three/fiber'
+import type { ThreeElements } from '@react-three/fiber'
 import { useGLTF } from '@react-three/drei'
 
-interface SwappableModelProps extends GroupProps {
+type SwappableModelProps = ThreeElements['group'] & {
   /** Path to a .glb/.gltf under public/ (e.g. '/models/laptop.glb').
    *  Leave undefined to render the primitive fallback. */
   modelPath?: string

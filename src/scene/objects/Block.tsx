@@ -1,6 +1,6 @@
-import type { MeshProps } from '@react-three/fiber'
+import type { ThreeElements } from '@react-three/fiber'
 
-interface BlockProps extends MeshProps {
+type BlockProps = ThreeElements['mesh'] & {
   size: [number, number, number]
   color: string
   roughness?: number
