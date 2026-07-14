@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react'
-
-const STROKE = 'rgba(255, 255, 255, 0.85)'
+import { useStore } from '../store/useStore'
+import { useTimeOfDay } from '../hooks/useTimeOfDay'
 
 function drawStyle(length: number, delay: number): CSSProperties {
   return {
@@ -16,14 +16,14 @@ function ArrowIntro({ delay }: { delay: number }) {
     <svg className="doodle-svg" viewBox="0 0 160 110" fill="none">
       <path
         d="M14 12 C 60 2, 104 30, 122 72"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3.5"
         strokeLinecap="round"
         style={drawStyle(180, delay)}
       />
       <path
         d="M104 62 L 123 74 L 128 52"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3.5"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -39,14 +39,14 @@ function ArrowCat({ delay }: { delay: number }) {
     <svg className="doodle-svg" viewBox="0 0 120 80" fill="none">
       <path
         d="M10 68 C 44 66, 80 48, 102 16"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         style={drawStyle(150, delay)}
       />
       <path
         d="M84 18 L 104 13 L 104 34"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -62,14 +62,14 @@ function ArrowMedals({ delay }: { delay: number }) {
     <svg className="doodle-svg" viewBox="0 0 140 90" fill="none">
       <path
         d="M126 14 C 90 10, 48 28, 26 62"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         style={drawStyle(160, delay)}
       />
       <path
         d="M44 54 L 24 65 L 42 76"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -85,7 +85,7 @@ function Underline({ delay }: { delay: number }) {
     <svg className="doodle-svg doodle-underline" viewBox="0 0 180 18" fill="none">
       <path
         d="M6 10 C 50 4, 120 4, 174 8 M30 14 C 70 10, 120 10, 150 13"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="3"
         strokeLinecap="round"
         style={drawStyle(330, delay)}
@@ -100,7 +100,7 @@ function Heart({ delay }: { delay: number }) {
     <svg className="doodle-svg doodle-heart" viewBox="0 0 40 36" fill="none">
       <path
         d="M20 31 C 6 20, 3 10, 10 6 C 15 3, 19 7, 20 11 C 21 7, 25 3, 30 6 C 37 10, 34 20, 20 31 Z"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="2.6"
         strokeLinecap="round"
         style={drawStyle(110, delay)}
@@ -114,7 +114,7 @@ function Star({ delay }: { delay: number }) {
     <svg className="doodle-svg doodle-star" viewBox="0 0 40 40" fill="none">
       <path
         d="M20 4 L 20 36 M6 20 L 34 20 M10 10 L 30 30 M30 10 L 10 30"
-        stroke={STROKE}
+        stroke="currentColor"
         strokeWidth="2.6"
         strokeLinecap="round"
         style={drawStyle(150, delay)}
@@ -124,8 +124,19 @@ function Star({ delay }: { delay: number }) {
 }
 
 export function DoodleOverlay() {
+  // Zoomed into an interactable or a modal is open — doodles get in the
+  // way of the focused object, so fade them out and bring them back once
+  // the camera returns to the default view.
+  const zoomedIn = useStore((s) => s.focusedId !== null || s.modalId !== null)
+  // Ink flips light/dark to stay legible against the scene background,
+  // which itself swaps per phase (light by day, dark navy at night).
+  const phase = useTimeOfDay()
+
   return (
-    <div className="doodle-overlay" aria-hidden="true">
+    <div
+      className={`doodle-overlay doodle-overlay--${phase}${zoomedIn ? ' doodle-overlay--hidden' : ''}`}
+      aria-hidden="true"
+    >
       {/* Intro block — top-left on desktop, top-center on mobile */}
       <div className="doodle doodle-sway doodle-intro">
         <span className="doodle-text doodle-title" style={{ animationDelay: '0.3s' }}>

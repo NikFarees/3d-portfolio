@@ -223,6 +223,23 @@ body {
   pointer-events: none;
   z-index: 5;
   overflow: hidden;
+  opacity: 1;
+  transition:
+    opacity 0.35s ease,
+    color 1.5s ease;
+  /* day/evening backgrounds are light — ink dark, with a light halo */
+  color: rgba(58, 47, 36, 0.8);
+  --doodle-halo: rgba(255, 255, 255, 0.65);
+}
+
+.doodle-overlay--night {
+  /* night background is dark navy — flip to light ink, dark halo */
+  color: rgba(255, 255, 255, 0.88);
+  --doodle-halo: rgba(20, 22, 40, 0.55);
+}
+
+.doodle-overlay--hidden {
+  opacity: 0;
 }
 
 .doodle {
@@ -231,13 +248,13 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 2px;
-  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.25));
+  filter: drop-shadow(0 1px 2px var(--doodle-halo));
 }
 
 .doodle-text {
   font-family: 'Caveat', cursive;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.85);
+  color: inherit;
   opacity: 0;
   transform: rotate(-4deg);
   animation: doodle-text-in 0.6s ease-out forwards;

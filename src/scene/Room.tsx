@@ -1,5 +1,64 @@
+import { useMemo } from 'react'
+import * as THREE from 'three'
 import { Block } from './objects/Block'
 import { COLORS } from './materials'
+
+// Procedural oak-plank texture for the floor — staggered boards with seam
+// lines and light grain streaks, generated on a canvas so no texture asset
+// needs to ship with the app.
+function createPlankTexture(): THREE.CanvasTexture {
+  const size = 512
+  const canvas = document.createElement('canvas')
+  canvas.width = size
+  canvas.height = size
+  const ctx = canvas.getContext('2d')!
+
+  const rows = 8
+  const plankH = size / rows
+  const shades = ['#c99a68', '#d1a473', '#c2925f', '#cb9c6c']
+
+  for (let row = 0; row < rows; row++) {
+    const y = row * plankH
+    ctx.fillStyle = shades[row % shades.length]!
+    ctx.fillRect(0, y, size, plankH)
+
+    // grain streaks
+    ctx.strokeStyle = 'rgba(90, 60, 30, 0.1)'
+    ctx.lineWidth = 1
+    for (let i = 0; i < 4; i++) {
+      const gy = y + ((i + 1) / 5) * plankH
+      ctx.beginPath()
+      ctx.moveTo(0, gy)
+      ctx.bezierCurveTo(size / 3, gy + 3, (size * 2) / 3, gy - 3, size, gy)
+      ctx.stroke()
+    }
+
+    // horizontal seam
+    ctx.strokeStyle = 'rgba(70, 45, 22, 0.35)'
+    ctx.lineWidth = 2
+    ctx.beginPath()
+    ctx.moveTo(0, y)
+    ctx.lineTo(size, y)
+    ctx.stroke()
+
+    // staggered vertical plank joints
+    ctx.lineWidth = 1.5
+    const offset = (row % 2) * (size / 6)
+    for (let x = offset - size / 3; x < size; x += size / 3) {
+      ctx.beginPath()
+      ctx.moveTo(x, y)
+      ctx.lineTo(x, y + plankH)
+      ctx.stroke()
+    }
+  }
+
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.wrapS = THREE.RepeatWrapping
+  texture.wrapT = THREE.RepeatWrapping
+  texture.repeat.set(4, 4)
+  texture.colorSpace = THREE.SRGBColorSpace
+  return texture
+}
 
 // Room bounds: floor spans x/z in [-4, 4], floor top at y = 0, walls 4 high.
 // Window wall sits at x = -4 (screen-left from the iso camera); the solid
@@ -126,6 +185,7 @@ function GrassTuft({ position, scale = 1 }: { position: [number, number, number]
 }
 
 export function Room() {
+  const floorTexture = useMemo(() => createPlankTexture(), [])
   const [a0, a1] = WIN.a
   const [b0, b1] = WIN.b
   const segments = [
@@ -143,17 +203,10 @@ export function Room() {
   return (
     <group>
       {/* floor slab, top face at y = 0 */}
-      <Block
-        size={[ROOM + 0.5, 0.3, ROOM + 0.5]}
-        color={COLORS.floorTile}
-        position={[0, -0.15, 0]}
-        roughness={0.95}
-      />
-      {/* tile grid lines */}
-      <gridHelper
-        args={[ROOM, 4, '#b5b0a6', '#b5b0a6']}
-        position={[0, 0.006, 0]}
-      />
+      <mesh receiveShadow position={[0, -0.15, 0]}>
+        <boxGeometry args={[ROOM + 0.5, 0.3, ROOM + 0.5]} />
+        <meshStandardMaterial map={floorTexture} roughness={0.85} />
+      </mesh>
 
       {/* soft area rug on the open floor */}
       <mesh receiveShadow position={[0.2, 0.02, 1.1]} scale={[1.25, 1, 0.9]}>

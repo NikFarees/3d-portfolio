@@ -27,6 +27,37 @@ const SPEED = 0.55 // m/s
 const TURN_SPEED = 5 // rad/s damp
 const MEOW_MS = 1200
 
+// Room floor is an 8x8 square centered at the origin (see Room.tsx). Keep
+// the cat well inside the walls regardless of viewport/frame-rate — a big
+// delta (e.g. a mobile tab resuming from background) could otherwise let
+// one frame's step overshoot a waypoint and carry it through a wall.
+const ROOM_MIN = -3.6
+const ROOM_MAX = 3.6
+
+function clampToRoom(pos: THREE.Vector3) {
+  pos.x = THREE.MathUtils.clamp(pos.x, ROOM_MIN, ROOM_MAX)
+  pos.z = THREE.MathUtils.clamp(pos.z, ROOM_MIN, ROOM_MAX)
+}
+
+// Bed footprint (see Bed.tsx: group at [2.05,0,-2.15], platform 2.35x3.4)
+// expanded by the cat's rough body radius, so it skirts the platform edge
+// instead of clipping through it even when a waypoint sits close by.
+const BED_BOUNDS = { minX: 0.5, maxX: 3.6, minZ: -4.2, maxZ: 0 }
+
+function keepClearOfBed(pos: THREE.Vector3) {
+  const { minX, maxX, minZ, maxZ } = BED_BOUNDS
+  if (pos.x <= minX || pos.x >= maxX || pos.z <= minZ || pos.z >= maxZ) return
+  const dLeft = pos.x - minX
+  const dRight = maxX - pos.x
+  const dNear = pos.z - minZ
+  const dFar = maxZ - pos.z
+  const min = Math.min(dLeft, dRight, dNear, dFar)
+  if (min === dLeft) pos.x = minX
+  else if (min === dRight) pos.x = maxX
+  else if (min === dNear) pos.z = minZ
+  else pos.z = maxZ
+}
+
 function pickNext(current: THREE.Vector3): THREE.Vector3 {
   let candidate: [number, number]
   do {
@@ -112,7 +143,10 @@ function WanderingCat() {
     g.rotation.y += dYaw * Math.min(1, TURN_SPEED * delta)
     // only advance when roughly facing the right way
     if (Math.abs(dYaw) < 0.6) {
-      g.position.addScaledVector(dir, SPEED * delta)
+      const step = Math.min(SPEED * delta, dist)
+      g.position.addScaledVector(dir, step)
+      clampToRoom(g.position)
+      keepClearOfBed(g.position)
     }
   })
 
